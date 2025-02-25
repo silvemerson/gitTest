@@ -1,12 +1,12 @@
 name: Uso de Variáveis no Repositório
 
 on: workflow_dispatch  # Execução manual
-env: 
-  AMBIENTE: ${{ vars.AMBIENTE }}
+
 jobs:
   example:
     runs-on: ubuntu-latest
+    env: 
+      AMBIENTE: ${{ vars.AMBIENTE }}    
     steps:
       - name: Exibir variável
         run: echo "O ambiente de execução é: $AMBIENTE"
-        
