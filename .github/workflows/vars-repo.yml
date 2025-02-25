@@ -6,5 +6,7 @@ jobs:
   example:
     runs-on: ubuntu-latest
     steps:
-      - name: Exibir variável
-        run: echo "O ambiente de execução é: ${{ vars.AMBIENTE }}"
+      - name: Definir variável de ambiente
+        env:
+          AMBIENTE: ${{ vars.AMBIENTE }}
+        run: echo "O ambiente de execução é: $AMBIENTE"
