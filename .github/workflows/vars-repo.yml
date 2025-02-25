@@ -9,4 +9,4 @@ jobs:
       - name: Definir variável de ambiente
         env:
           AMBIENTE: ${{ vars.AMBIENTE }}
-        run: echo $AMBIENTE
+        run: echo "O ambiente é:" $AMBIENTE
