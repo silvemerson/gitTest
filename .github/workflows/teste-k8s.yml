@@ -1,0 +1,24 @@
+name: Deploy to Kubernetes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Kubeconfig
+        run: |
+          echo "$KUBECONFIG_TOKEN" > kubeconfig
+          export KUBECONFIG=kubeconfig
+
+      - name: Listando nodes e pods
+        run: |
+          kubectl get nodes && kubectl get pods -A
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG_TOKEN }}
