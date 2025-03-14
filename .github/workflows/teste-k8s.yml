@@ -18,6 +18,10 @@ jobs:
       uses: azure/setup-kubectl@v1
       with:
         version: 'v1.24.0'
+        
+    - name: Criando ~/.kube
+      run: mkdir ~/.kube
+        
 
     - name: Set up Kubernetes config
       env:
