@@ -21,8 +21,8 @@ jobs:
 
     - name: Set up Kubernetes config
       env:
-        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-      run: echo "${KUBE_CONFIG}" > ~/.kube/config
+        KUBECONFIG_K3S: ${{ secrets.KUBECONFIG_K3S }}
+      run: echo "${KUBECONFIG_K3S}" > ~/.kube/config
 
     - name: List Kubernetes Nodes
       run: kubectl get nodes
