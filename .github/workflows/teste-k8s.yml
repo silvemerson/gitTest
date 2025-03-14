@@ -19,6 +19,6 @@ jobs:
 
       - name: Listando nodes e pods
         run: |
-          kubectl get nodes --server=https://34.28.216.238:6443 --insecure-skip-tls-verify && kubectl get pods --server=https://34.28.216.238:6443 --insecure-skip-tls-verify -A
+          kubectl get nodes --server=https://34.28.216.238:6443 --insecure-skip-tls-verify
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG_TOKEN }}
