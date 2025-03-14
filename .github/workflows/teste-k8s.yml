@@ -14,7 +14,7 @@ jobs:
 
       - name: Listando nodes e pods
         run: |
-          echo "$KUBECONFIG_TOKEN" > kubeconfig
+          echo "$KUBECONFIG_K3S" > kubeconfig
           export KUBECONFIG=kubeconfig       
           kubectl get nodes
 
