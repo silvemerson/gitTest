@@ -12,10 +12,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Kubeconfig k3s
+        run: |
+          # Cria o arquivo kubeconfig a partir do token no GitHub Secrets
+          echo "$KUBECONFIG_TOKEN" > kubeconfig
+          export KUBECONFIG=kubeconfig
+          
+          # Verificar o conteúdo do kubeconfig
+          echo "Verificando kubeconfig:"
+          cat kubeconfig
+
       - name: Listando nodes e pods
         run: |
-          echo "$KUBECONFIG_K3S" > kubeconfig
-          cat kubeconfig
-          export KUBECONFIG=kubeconfig       
-          kubectl get nodes
-
+          # Listando os nodes do cluster
+          echo "Listando nodes do cluster:"
+          kubectl get nodes --server=https://34.28.216.238:6443 --insecure-skip-tls-verify
+          
+          # Listando os pods no namespace default
+          echo "Listando pods no namespace default:"
+          kubectl get pods --namespace=default --server=https://34.28.216.238:6443 --insecure-skip-tls-verify
+          
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG_TOKEN }}
