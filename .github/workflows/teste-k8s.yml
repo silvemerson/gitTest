@@ -1,36 +1,28 @@
-name: teste to Kubernetes
+name: List Kubernetes Nodes
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  list-nodes:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Check out repository
+      uses: actions/checkout@v2
 
-      - name: Kubeconfig k3s
-        run: |
-          # Cria o arquivo kubeconfig a partir do token no GitHub Secrets
-          echo "$KUBECONFIG_TOKEN" > kubeconfig
-          export KUBECONFIG=kubeconfig
-          
-          # Verificar o conteúdo do kubeconfig
-          echo "Verificando kubeconfig:"
-          cat kubeconfig
+    - name: Set up Kubernetes CLI (kubectl)
+      uses: azure/setup-kubectl@v1
+      with:
+        version: 'v1.24.0'
 
-      - name: Listando nodes e pods
-        run: |
-          # Listando os nodes do cluster
-          echo "Listando nodes do cluster:"
-          kubectl get nodes --server=https://34.28.216.238:6443 --insecure-skip-tls-verify
-          
-          # Listando os pods no namespace default
-          echo "Listando pods no namespace default:"
-          kubectl get pods --namespace=default --server=https://34.28.216.238:6443 --insecure-skip-tls-verify
-          
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG_TOKEN }}
+    - name: Set up Kubernetes config
+      env:
+        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      run: echo "${KUBE_CONFIG}" > ~/.kube/config
+
+    - name: List Kubernetes Nodes
+      run: kubectl get nodes
